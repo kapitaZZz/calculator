@@ -10,20 +10,11 @@ public class Operation {
         // вычисление результата после ввода данных от пользователя
 
         switch (operation) {
-            case '+':
-                result = one + two;
-                break;
-            case '-':
-                result = one - two;
-                break;
-            case '*':
-                result = one * two;
-                break;
-            case '/':
-                result = one / two;
-                break;
-            default:
-                System.out.println("Unknown operation");
+            case '+' -> result = one + two;
+            case '-' -> result = one - two;
+            case '*' -> result = one * two;
+            case '/' -> result = one / two;
+            default -> System.out.println("Unknown operation");
         }
         return result;
     }
