@@ -37,7 +37,15 @@ public class Main {
             }
         } else {
             numberOne = translator.romanToNumber(inputUtil.getNumberOne());
-            System.out.println(operationObj.result(numberOne, numberTwo, operation));
+
+            if (checkInput.isNumeric(inputUtil.getNumberTwo())) {
+                int numberTwo = Integer.valueOf(inputUtil.getNumberTwo());
+                System.out.println(operationObj.result(numberOne, numberTwo, operation));
+
+            } else {
+                numberTwo = translator.romanToNumber(inputUtil.getNumberTwo());
+                System.out.println(operationObj.result(numberOne, numberTwo, operation));
+            }
         }
 
 
