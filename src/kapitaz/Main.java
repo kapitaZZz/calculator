@@ -11,39 +11,50 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         InputUtil inputUtil = new InputUtil();
         Operation operationObj = new Operation();
-        Translator translator = new Translator();
         CheckInput checkInput = new CheckInput();
 
         System.out.print("Input numbers and operation in a line (a + b): ");
-        String userInput = scanner.nextLine();
 
+        String userInput = scanner.nextLine();
         inputUtil.stringToArray(userInput);
         char operation = inputUtil.operation;
 
-        if (checkInput.isNumeric(inputUtil.getNumberOne())) {
-            int numberOne = Integer.parseInt(inputUtil.getNumberOne());
-            if (checkInput.isNumeric(inputUtil.getNumberTwo())) {
+
+        try {
+            if (checkInput.isNumeric(inputUtil.getNumberOne()) || (checkInput.isNumeric(inputUtil.getNumberTwo()))) {
+                int numberOne = Integer.parseInt(inputUtil.getNumberOne());
                 int numberTwo = Integer.parseInt(inputUtil.getNumberTwo());
+                if (numberOne < 11 && numberOne > 0) {
+                    if (numberTwo > 0 && numberTwo < 11) {
+                        System.out.println(operationObj.result(numberOne, numberTwo, operation));
+                    } else {
+                        throw new Exception("Second number is not valid");
+                    }
+                } else {
+                    throw new Exception("First number is not valid");
+                }
+            } else if (!checkInput.isNumeric(inputUtil.getNumberOne()) && (!checkInput.isNumeric(inputUtil.getNumberTwo()))) {
+                numberOne = RomanNumeral.romanToArabic(inputUtil.getNumberOne());
+                numberTwo = RomanNumeral.romanToArabic(inputUtil.getNumberTwo());
 
-                System.out.println(operationObj.result(numberOne, numberTwo, operation));
+                if (numberOne < 11 && numberOne > 0) {
+                    if (numberTwo > 0 && numberTwo < 11) {
 
-            } else {
-                numberTwo = translator.romanToNumber(inputUtil.getNumberTwo());
-                System.out.println(operationObj.result(numberOne, numberTwo, operation));
+                        int result = operationObj.result(numberOne, numberTwo, operation);
+                        System.out.println(RomanNumeral.arabicToRoman(result));
+
+                    } else {
+                        throw new Exception("Second number is not valid");
+                    }
+                } else {
+                    throw new Exception("First number is not valid");
+                }
             }
-        } else {
-            numberOne = translator.romanToNumber(inputUtil.getNumberOne());
-
-            if (checkInput.isNumeric(inputUtil.getNumberTwo())) {
-                int numberTwo = Integer.parseInt(inputUtil.getNumberTwo());
-                System.out.println(operationObj.result(numberOne, numberTwo, operation));
-
-            } else {
-                numberTwo = translator.romanToNumber(inputUtil.getNumberTwo());
-                System.out.println(operationObj.result(numberOne, numberTwo, operation));
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-
     }
+
 }
+
